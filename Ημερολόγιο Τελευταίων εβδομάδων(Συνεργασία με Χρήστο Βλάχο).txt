@@ -1,0 +1,55 @@
+Στις εβδομάδες που πέρασαν με την βοήθεια του Χρήστου Βλάχου(3922) ψάξαμε και προσπαθήσαμε να κατανοήσουμε και να γράψουμε(κώδικα) για τους χάρτες που θα χρησιμοποιούσαμε 
+στο project.Μετά απο πολύωρο "σερφάρισμα" στο διαδύκτιο καταφέραμε να βρούμε σε ένα stack-overflow τον κώδικα που μας βοήθησε να γράψουμε κώδικα ώστε οι χάρτες να μπορέσουν 
+να κάνουν έστω τις βασικές λειτουργίες για το Geo-Location του Application ως σε έναν αξιοσέβαστο βαθμό.
+Το τελικό αποτέλεσμα είναι το εξής:
+
+
+package GeoLoc;
+
+import com.lynden.gmapsfx.GoogleMapView;
+import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.javascript.object.LatLong;
+import com.lynden.gmapsfx.javascript.object.MapOptions;
+import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+
+public class SwingGoogleMaps {
+    JFXPanel jfxPanel;
+    GoogleMap map;
+    GoogleMapView mapComponent;
+    Scene scene;
+
+     public final JFXPanel SwingGoogleMaps() {
+        jfxPanel = new JFXPanel();
+        jfxPanel.setSize(385, 200);
+        jfxPanel.setLocation(5, 80);
+        Platform.runLater(() -> {
+            mapComponent = new GoogleMapView();
+            mapComponent.addMapInializedListener(() -> {
+
+                LatLong center = new LatLong(41.086602, 23.5392998);
+
+                MapOptions options = new MapOptions()
+                        .center(center)
+                        .mapMarker(false)
+                        .zoom(2)
+                        .overviewMapControl(false)
+                        .panControl(false)
+                        .rotateControl(false)
+                        .scaleControl(false)
+                        .streetViewControl(false)
+                        .zoomControl(false)
+                        .mapType(MapTypeIdEnum.ROADMAP);
+
+                map = mapComponent.createMap(options);
+
+            });
+            scene = new Scene(mapComponent);
+
+            jfxPanel.setScene(scene);
+        });
+    return jfxPanel;
+    } 
+Τέλος Κώδικα!!!
